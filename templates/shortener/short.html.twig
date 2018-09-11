@@ -1,4 +1,18 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-    <a href="http://{{ app.request.host }}/{{ shortLink }}">{{ app.request.host }}/{{ shortLink }}</a>
+
+    <div class="container">
+        <h2>Links:</h2>
+
+        <div class="row">
+        <label>Short link
+            <a href="http://{{ app.request.host }}/{{ shortLink }}">{{ app.request.host }}/{{ shortLink }}</a>
+        </label>
+        </div>
+    <div class="row">
+            <label>Stat link
+            <a href="http://{{ app.request.host }}/stat/{{ shortLink }}">{{ app.request.host }}/stat/{{ shortLink }}</a>
+        </label>
+    </div>
+    </div>
 {% endblock %}

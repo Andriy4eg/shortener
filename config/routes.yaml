@@ -2,6 +2,11 @@ shortUrl:
     path: /shortUrl
     controller: App\Controller\Shortener::shortUrl
 
+stat:
+    path: /stat/{url}
+    controller: App\Controller\Admin::index
+    methods: [GET]
+
 index:
     path: /{url}
     controller: App\Controller\Shortener::index

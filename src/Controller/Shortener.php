@@ -5,11 +5,13 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\ShortUrl;
+use App\Entity\Stat;
 
 class Shortener extends Controller {
 
     public function index(Request $request){
-        if ( $url = $request->get('url') ) {
+        if ( $url = filter_var($request->get('url', FILTER_VALIDATE_URL) ) ) {
+
             $shortener = $this->container->get('Shortener');
 
             $linkId = $shortener->Decode($url);
@@ -19,6 +21,16 @@ class Shortener extends Controller {
             $shortUrl = $em->getRepository(ShortUrl::class)->find($linkId);
 
             if ( $shortUrl ) {
+                $userIp = $request->getClientIp();
+
+                $stat = new Stat();
+
+                $stat->setIp($userIp);
+                $stat->setLinkId($linkId);
+
+                $em->persist($stat);
+                $em->flush();
+
                 return $this->redirect($shortUrl->getLink());
             }
 
@@ -41,7 +53,7 @@ class Shortener extends Controller {
             $em->persist($shortUrl);
             $em->flush();
 
-            $shortLink = $shortener->Encode( $shortUrl->getId() );
+            $shortLink = $shortener->Encode( $shortUrl->getId()-1 );
             $shortUrl->setShortUrl( $shortLink );
 
             $em->persist($shortUrl);

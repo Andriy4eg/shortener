@@ -34,7 +34,7 @@ class Shortener
         $i = 0;
 
         for ( $i; $i < mb_strlen($s); $i++ ) {
-            $i = ($i * $this->base) + (mb_strpos($this->alphabet, $s[$i])-1 );
+            $i = ($i * $this->base) + (mb_strpos($this->alphabet, $s[$i]) );
         }
 
         return $i;

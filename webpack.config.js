@@ -13,14 +13,10 @@ Encore
     // .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    .addEntry('js/app', [
-        './assets/js/bootstrap/bootstrap.js',
-        'bootstrap-datepicker'
-    ])
+    //.addEntry('js/app', [])
     .addStyleEntry('css/app', [
         './assets/css/bootstrap/bootstrap.css',
-        'bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
-        './assets/css/pagerfanta.css'
+        //'bootstrap-datepicker/dist/css/bootstrap-datepicker.css'
     ])
 
     // uncomment if you use Sass/SCSS files
