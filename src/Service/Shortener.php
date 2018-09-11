@@ -15,7 +15,7 @@ class Shortener
         $this->base = mb_strlen($this->alphabet);
     }
 
-    public function Encode( $i ) {
+    public function Encode( int $i ) {
 
         if ( $i == 0 )
             return $this->alphabet[0];
@@ -30,11 +30,11 @@ class Shortener
         return $this->alphabet[$i].$s;
     }
 
-    public function Decode( $s ) {
+    public function Decode( string $s ): int {
         $i = 0;
 
         for ( $i; $i < mb_strlen($s); $i++ ) {
-            $i = ($i * $this->base) + mb_strpos($this->alphabet, $s[$i]);
+            $i = ($i * $this->base) + (mb_strpos($this->alphabet, $s[$i])-1 );
         }
 
         return $i;
