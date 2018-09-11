@@ -3,20 +3,55 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use App\Entity\ShortUrl;
 
 class Shortener extends Controller {
 
-    public function index(){
-        $shortener = $this->container->get('Shortener');
-        // Simple test of encode/decode operations
-        for ( $i = 0; $i < 20000; $i++ ) {
-            $encoded = $shortener->Encode($i);
-//            var_dump($encoded); die;
+    public function index(Request $request){
+        if ( $url = $request->get('url') ) {
+            $shortener = $this->container->get('Shortener');
 
-            if ($shortener->Decode($encoded) != $i) {
-                printf("%s is not %s", $shortener->Encode($i), $i);
-                echo('<br/>');
+            $linkId = $shortener->Decode($url);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $shortUrl = $em->getRepository(ShortUrl::class)->find($linkId);
+
+            if ( $shortUrl ) {
+                return $this->redirect($shortUrl->getLink());
             }
+
         }
+
+        return $this->render('shortener/index.html.twig');
+    }
+
+    public function shortUrl(Request $request){
+        $link = $request->get('link');
+
+        if ( $link ) {
+            $shortener = $this->container->get('Shortener');
+            $em = $this->getDoctrine()->getManager();
+
+            $shortUrl = new ShortUrl();
+
+            $shortUrl->setLink($link);
+
+            $em->persist($shortUrl);
+            $em->flush();
+
+            $shortLink = $shortener->Encode( $shortUrl->getId() );
+            $shortUrl->setShortUrl( $shortLink );
+
+            $em->persist($shortUrl);
+
+            $em->flush();
+        }
+
+        if ( !$shortLink )
+            return $this->redirect('/');
+        else
+            return $this->render('shortener/short.html.twig', ['shortLink' => $shortLink]);
     }
 }

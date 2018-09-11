@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    <div class="container">
+        <form method="post" action="/shortUrl">
+            <label>Short url
+                <input name="link" type="text" placeholder="input link to short">
+            </label>
+            <input type="submit" value="short url">
+        </form>
+    </div>
+{% endblock %}

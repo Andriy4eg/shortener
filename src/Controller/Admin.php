@@ -1,7 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: andre
- * Date: 11.09.2018
- * Time: 12:18
- */
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
+class Admin extends Controller {
+
+    public function index( Request $request ) {
+
+    }
+}
