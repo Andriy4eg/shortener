@@ -22,10 +22,12 @@ class Shortener extends Controller {
 
             if ( $shortUrl ) {
                 $userIp = $request->getClientIp();
+                $userAgent = $request->headers->get('User-Agent');
 
                 $stat = new Stat();
 
                 $stat->setIp($userIp);
+                $stat->setUserAgent($userAgent);
                 $stat->setLinkId($linkId);
 
                 $em->persist($stat);
@@ -33,7 +35,6 @@ class Shortener extends Controller {
 
                 return $this->redirect($shortUrl->getLink());
             }
-
         }
 
         return $this->render('shortener/index.html.twig');
@@ -57,7 +58,6 @@ class Shortener extends Controller {
             $shortUrl->setShortUrl( $shortLink );
 
             $em->persist($shortUrl);
-
             $em->flush();
         }
 

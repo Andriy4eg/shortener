@@ -5,13 +5,16 @@
         <h2>Statistic</h2>
 
     {% if stat %}
-
+     <div class="row">
+        <ul class="list-group">
         {% for s in stat %}
-            <div class="row">
-                Visited from ip: {{ s.ip }} at {{ s.dateVisit|date }}
-            </div>
+            <li class="list-group-item">
+                <p>User Agent: {{ s.userAgent }}</p>
+                <p>Visited from ip: {{ s.ip }} at {{ s.dateVisit|date }}</p>
+            </li>
         {% endfor %}
-
+        </ul>
+     </div>
     {% else %}
         <p>Stat is empty</p>
     {% endif %}

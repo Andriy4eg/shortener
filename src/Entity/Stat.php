@@ -41,6 +41,27 @@ class Stat
     private $link_id;
 
     /**
+     * @ORM\Column(type="string", length=256, nullable=true)
+     */
+    private $user_agent;
+
+    /**
+     * @return mixed
+     */
+    public function getUserAgent()
+    {
+        return $this->user_agent;
+    }
+
+    /**
+     * @param mixed $user_agent
+     */
+    public function setUserAgent($user_agent)
+    {
+        $this->user_agent = $user_agent;
+    }
+
+    /**
      * @return mixed
      */
     public function getLinkId()
